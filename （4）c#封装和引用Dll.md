@@ -100,7 +100,11 @@ getName
 
 其实这个方法本质上也是和不借助vs一样的调用.NET CLI的那些命令，仅仅是从CLI变成了GUI而已。
 
+<<<<<<< HEAD
 **以下来源为visual studio的[官方教程](https://docs.microsoft.com/zh-cn/dotnet/core/tutorials/library-with-visual-studio?pivots=dotnet-5-0)：**
+=======
+**以下是visual studio的[官方教程](https://docs.microsoft.com/zh-cn/dotnet/core/tutorials/library-with-visual-studio?pivots=dotnet-5-0)：**
+>>>>>>> 24ee969fe5ae745ddf3b32617a4f7ac51c3ec6d7
 
 类库定义的是可以由应用程序调用的类型和方法。 如果库以 .NET Standard 2.0 为目标，则支持 .NET Standard 2.0 的任何 .NET 实现（包括 .NET Framework）均可调用该库。 如果库以 .NET 5 为目标，则以 .NET 5 为目标的任何应用程序均可调用该库。 本教程演示如何以 .NET 5 为目标。
 
