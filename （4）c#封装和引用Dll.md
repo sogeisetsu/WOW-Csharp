@@ -4,7 +4,7 @@ Dll就是动态链接库，可以理解为一个已经编译好的package，Dll�
 
 .NET SDK的运行时CLR就是一堆Dll的集合。
 
-C#调用Dll分为原生调用（静态调用）和动态加载两个部分，原生调用指的是调用通过.NET框架编译并发布的Dll。动态加载指的是调用其他第三方语言（比如c语言）用自己的编译器编译生成的Dll。
+**C#调用Dll分为原生调用（静态调用）和动态加载两个部分**，原生调用指的是调用通过.NET框架编译并发布的Dll。动态加载指的是调用其他第三方语言（比如c语言）用自己的编译器编译生成的Dll。
 
 **本文讲的是原生调用（静态调用）。**
 
@@ -262,4 +262,3 @@ getName
 copyright © 2021 苏月晟，版权所有。
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />本<span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" rel="dct:type">作品</span>由<span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">苏月晟</span>采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。
-
