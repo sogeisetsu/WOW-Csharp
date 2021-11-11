@@ -137,7 +137,7 @@ public class User
 
 输出结果：
 
-![img](https://images2015.cnblogs.com/blog/1033738/201611/1033738-20161111162347530-1739288861.png)
+![](https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20211111143834.png)
 
 ## 四、对象初始化器和集合初始化器
 

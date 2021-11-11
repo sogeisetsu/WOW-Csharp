@@ -6,7 +6,7 @@
 
 **DOTNET简称“.NET”。**
 
-![dotnet5](https://blog.ai3.fr/wp-content/uploads/2019/06/dotnet5_platform-880-400-1.png)
+![](https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20211111143708.png)
 
 毫无疑问，DOTNET现在是一个跨平台的开发框架，但是DOTNET的产生之时，更多的是为了解决传统的Windows开发所面临的问题。传统的Windows开发基本是使用编程语言来调用`Win32 API`或者是`COM`。这种方式工程量大、实际代码复杂、需要大量丑陋的底层代码。**于是微软推出了下一代平台服务的目标——DOTNET。**
 
