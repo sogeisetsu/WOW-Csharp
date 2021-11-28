@@ -2,7 +2,12 @@
 
 我的C#学习笔记，希望能创造一个优秀的Csharp学习教程
 
+## Status
+
+![Alt](https://repobeats.axiom.co/api/embed/3cb5cb5337ab4691e6a09f3e64538963a5560ad5.svg "Repobeats analytics image")
+
 ## LICENSE
+
 已将所有引用其他文章之内容清楚明白地标注，其他部分皆为作者劳动成果。对作者劳动成果做以下声明：
 
 copyright © 2021 苏月晟，版权所有。
