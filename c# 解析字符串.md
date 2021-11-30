@@ -12,7 +12,64 @@ c#解析json字符串在.NET 5的首选是使用`System.Text.Json`的`JsonDocume
 
 ## 格式化输出
 
+想要格式化输出，需要先把字符串转变成一个`JsonDocument`实例化对象，然后在序列化这个对象的时候指定`JsonSerializerOptions`为整齐打印。
+
+```c#
+// 先定义一个json字符串
+string jsonText = "{\"ClassName\":\"Science\",\"Final\":true,\"Semester\":\"2019-01-01\",\"Students\":[{\"Name\":\"John\",\"Grade\":94.3},{\"Name\":\"James\",\"Grade\":81.0},{\"Name\":\"Julia\",\"Grade\":91.9},{\"Name\":\"Jessica\",\"Grade\":72.4},{\"Name\":\"Johnathan\"}],\"Teacher'sName\":\"Jane\"}";
+Console.WriteLine(jsonText);
+// 将表示单个 JSON 字符串值的文本分析为 JsonDocument
+JsonDocument jsonDocument = JsonDocument.Parse(jsonText);
+// 序列化
+string formatJson = JsonSerializer.Serialize(jsonDocument, new JsonSerializerOptions()
+                                             {
+                                                 // 整齐打印
+                                                 WriteIndented = true,
+                                                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
+                                             });
+// 格式化输出
+Console.WriteLine(formatJson);
+```
+
+这个比较麻烦，我们可以将其制作成拓展方法。
+
+```c#
+internal static class JsonDocumentExtensions
+{
+    internal static string JDFormatToString(this JsonDocument jsonDocument)
+    {
+        return JsonSerializer.Serialize(jsonDocument, new JsonSerializerOptions()
+                                        {
+                                            WriteIndented = true,
+                                            Encoder=JavaScriptEncoder.Create(UnicodeRanges.All)
+                                        });
+    }
+
+    internal static string TOJsonString(this string str)
+    {
+        JsonDocument jsonDocument = JsonDocument.Parse(str);
+        return JsonSerializer.Serialize(jsonDocument, new JsonSerializerOptions()
+                                        {
+                                            WriteIndented = true,
+                                            Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
+                                        });
+    }
+}
+
+```
+
+这样就可以用类似于下面的方法直接调用了：
+
+```c#
+// jsondocument 格式化输出为json字符串
+string a = jsonDocument.JDFormatToString();
+// 格式化字符串
+string b = jsonText.TOJsonString();
+```
+
 ## JSON DOM choices
+
+
 
 # LICENSE
 
