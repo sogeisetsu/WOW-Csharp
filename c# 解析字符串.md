@@ -67,9 +67,11 @@ string a = jsonDocument.JDFormatToString();
 string b = jsonText.TOJsonString();
 ```
 
-## JSON DOM choices
+## JSON DOM
 
+对JSON进行DOM操作.NET提供了两种官方方法，分别是JsonDocumenth和JSonNode，其中JsonNode提供了创建可变 DOM 的能力，它更加强大和简单，但是JsonNode是.NET 6的内容，鉴于.NET 6的稳定版刚刚发布，所以本文还是讲解JsonDocumenth。.NET 6是一个LTS版本，它于2021年11月8日正式发布，会支持到2024年11月8日，详情可以查看[.NET and .NET Core official support policy (microsoft.com)](https://dotnet.microsoft.com/platform/support/policy/dotnet-core#cadence)，笔者会在.NET 5结束支持之前（2022 年 5 月 8 日）写一篇关于JSonNode的文章作为本文的Patch。
 
+JsonDocument 提供了使用 Utf8JsonReader 构建只读 DOM 的能力。可以通过 JsonElement 类型访问组成有效负载的 JSON 元素。 JsonElement 类型提供数组和对象枚举器以及用于将 JSON 文本转换为常见 .NET 类型的 API。 JsonDocument 公开一个 RootElement 属性。
 
 # LICENSE
 
