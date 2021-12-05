@@ -193,7 +193,90 @@
   homepage: blog/GIT 的merge、rebase和cherry-pick.md
 ```
 
+然后修改根目录下的`docfx.json`，这是依赖的配置文件。关于它的用法后面再讲，在`docfx.json`修改build的content下添加:
+
+```json
+{
+    "files": [
+        "blog/**.md",
+        "blog/**/toc.yml",
+        "toc.yml",
+        "*.md"
+    ]
+}
+```
+
 在`docfx_project`文件夹下运行`docfx`和`docfx serve _site`，然后就可以看到已经有文章加入:
 
 ![](https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20211205154207.png)
+
+## 第二步 向网站添加 API 文档
+
+向/src文件夹下添加一个c#项目，要包含csproj文件。
+
+```c#
+├── src
+   ├── ConsoleApp1.csproj
+   ├── Program.cs
+   ├── bin
+   ├── newLei.cs
+   └── obj
+```
+
+在`docfx_project`文件夹下运行`docfx`和`docfx serve _site`，然后就可以看到已经有根据注释自动生成的API文章加入:
+
+![](https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20211205185532.png)
+
+## 在左侧导航加入其他文件夹的内容
+
+当前的根目录下的toc.yml是这样的：
+
+```yaml
+- name: 开始
+  href: articles/
+- name: Api 文档
+  href: api/
+  homepage: api/index.md
+- name: 博客
+  href: blog/
+  homepage: blog/GIT 的merge、rebase和cherry-pick.md
+```
+
+这表示`开始`这一菜单下只会包含`articles`文件夹下面的内容。
+
+现在在根目录新建一个文件夹，命名为`anycombine`，在该文件夹下面放置一个toc.yml，内容如下：
+
+```yaml
+- name: Articles
+  href: ../articles/toc.yml
+- name: Blog
+  href: ../blog/toc.yml
+```
+
+然后修改根目录下的toc.yml：
+
+```yaml
+- name: 开始
+  href: anycombine/
+- name: Api 文档
+  href: api/
+  homepage: api/index.md
+- name: 博客
+  href: blog/
+  homepage: blog/GIT 的merge、rebase和cherry-pick.md
+```
+
+最后在`docfx.json`里面添加`anycombine`文件夹，让其在创建网页时能够包含这个文件夹：
+
+```json
+  "build": {
+    "content": [
+      {
+        "files": "anycombine/**"
+      },
+```
+
+然后创建网站，网站上导航菜单栏中的`开始`选项包含`articles`和`blog`两个文件夹的内容：
+
+![](https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20211205222709.png)
 
