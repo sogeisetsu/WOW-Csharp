@@ -2,7 +2,7 @@
 
 # DOCFX
 
-在团队开发过程中，一个漂亮的开发文档是至关重要的，它有助于帮助人们快速地理解项目。DOCFX是一个搭建开发文档网站和根据注释生成api文档的工具。
+在团队开发过程中，一个漂亮的开发文档是至关重要的，它有助于帮助人们快速地理解项目。DOCFX是一个搭建开发文档网站和根据注释生成api文档的工具。DOCFX极其强大，自定义程度极高，缺点是自动化程度不高，使用起来略显麻烦，比如已经2021年了，官方竟然还不支持自动生成目录，好在其有很多与其相关的开源项目，可以一定程度上弥补它的缺憾。如果将DOCFX用好了，它就不仅仅是API文档生成器，还是一个简单的博客网站构建器，DOCFX由微软旗下的dotnet开源，微软的MSDN的构建就用到了DOCFX。遗憾的是DOCFX目前官方只支持.Net和JavaScript，但是它提供了`Generate Metadata`的步骤，理论上它可以支持任何语言（DocFX is designed to support any language），GitHub上基本上常见的语言都有针对DOCFX的开源项目。
 
 ## 第一步 生成简单的文档网站
 
@@ -279,4 +279,6 @@
 然后创建网站，网站上导航菜单栏中的`开始`选项包含`articles`和`blog`两个文件夹的内容：
 
 ![](https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20211205222709.png)
+
+## 自定义
 
