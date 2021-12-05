@@ -2,7 +2,7 @@
 
 # DOCFX
 
-在团队开发过程中，一个漂亮的开发文档是至关重要的，它有助于帮助人们快速地理解项目。DOCFX是一个搭建开发文档网站和根据注释生成api文档的工具。DOCFX极其强大，自定义程度极高，缺点是自动化程度不高，使用起来略显麻烦，比如已经2021年了，官方竟然还不支持自动生成目录，好在其有很多与其相关的开源项目，可以一定程度上弥补它的缺憾。如果将DOCFX用好了，它就不仅仅是API文档生成器，还是一个简单的博客网站构建器，DOCFX由微软旗下的dotnet开源，微软的MSDN的构建就用到了DOCFX。遗憾的是DOCFX目前官方只支持.Net和JavaScript，但是它提供了`Generate Metadata`的步骤，理论上它可以支持任何语言（DocFX is designed to support any language），GitHub上基本上常见的语言都有针对DOCFX的开源项目。
+在团队开发过程中，一个漂亮的开发文档是至关重要的，它有助于帮助人们快速地理解项目。DOCFX是一个搭建开发文档网站和根据注释生成api文档的工具。DOCFX极其强大，自定义程度极高，缺点是自动化程度不高，使用起来略显麻烦，比如已经2021年了，官方竟然还不支持自动生成目录，好在其有很多与其相关的开源项目，可以一定程度上弥补它的缺憾。如果将DOCFX用好了，它就不仅仅是API文档生成器，还是一个简单的博客网站构建器，DOCFX由微软旗下的dotnet开源，微软的MSDN的构建就用到了DOCFX。遗憾的是DOCFX目前官方只支持.Net和JavaScript，但是它提供了`Generate Metadata`的步骤，理论上它可以支持任何语言（DocFX is designed to support any language），GitHub上基本上常见的语言都有针对DOCFX的开源项目。本文对DOCFX的讲解不及其功能的十分之一，但是基本上可以应对日常的需要，如果想要进一步了解DOCFX，请前往[DocFX - static documentation generator | DocFX website (dotnet.github.io)](https://dotnet.github.io/docfx/index.html)。本文所使用由DOCFX生成的API文档项目可以前往[sogeisetsu/WOW-Csharp at docfx_example (github.com)](https://github.com/sogeisetsu/WOW-Csharp/tree/docfx_example)查看源码。
 
 ## 第一步 生成简单的文档网站
 
@@ -38,7 +38,7 @@
 
 **/** - 这个网站的根目录，包含:
 
-- **docfx.json** - docfx 依赖的配置文件。
+- **docfx.json** - docfx 依赖的配置文件。**所有的命令及其涉及到的文件都会用`docfx.json`来配置。**
 - **index.md** - 用来创建网站的首页。
 - **toc.yml** – 呈现为导航菜单栏，显示在网站每个页面的顶部。
 
@@ -216,11 +216,11 @@
 
 ```c#
 ├── src
-   ├── ConsoleApp1.csproj
-   ├── Program.cs
-   ├── bin
-   ├── newLei.cs
-   └── obj
+   ├── ConsoleApp1.csproj
+   ├── Program.cs
+   ├── bin
+   ├── newLei.cs
+   └── obj
 ```
 
 在`docfx_project`文件夹下运行`docfx`和`docfx serve _site`，然后就可以看到已经有根据注释自动生成的API文章加入:
@@ -280,5 +280,96 @@
 
 ![](https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20211205222709.png)
 
+## 导出为PDF文档
+
+之前已经讲解了如何生成网站，现在讲解如何将网站上面的内容转为PDF，先下载一个开源工具 [wkhtmltopdf](https://wkhtmltopdf.org/)，可以前往[wkhtmltopdf](https://wkhtmltopdf.org/downloads.html)根据自己电脑的规格来选择版本。安装或解压之后，将其放置在环境变量，方便以后调用，可以在power shell使用`setx PATH "%PATH%;D:\wkhtmltopdf\bin"`来将其放入环境变量。
+
+然后在之前docfx生成的文件夹的根目录下创建一个文件夹，名为`pdf`，在里面创建一个`toc.yml`来包含需要生成PDF的目录：
+
+```yaml
+- name: Articles
+  href: ../articles/toc.yml
+- name: Blog
+  href: ../blog/toc.yml
+- name: API 文档
+  href: ../api/toc.yml
+```
+
+接下来，需要将*pdf*部分添加到`docfx.json`，只有这样，才能在执行docfx的时候来将其转换为pdf，增加一个pdf属性，**在`docfx.json`排除了 TOC 文件，因为每个 TOC 文件都会生成一个 PDF 文件**，内容如下：
+
+```json
+"pdf": {
+    "content": [
+        {
+            "files": [
+                "api/**.yml"
+            ],
+            "exclude": [
+                "**/toc.yml",
+                "**/toc.md"
+            ]
+        },
+        {
+            "files": [
+                "articles/**.md",
+                "articles/**/toc.yml",
+                "toc.yml",
+                "*.md"
+            ],
+            "exclude": [
+                "**/toc.yml",
+                "**/toc.md"
+            ]
+        },
+        {
+            "files": [
+                "blog/**.md",
+                "blog/**/toc.yml",
+                "toc.yml",
+                "*.md",
+                "pdf/*"
+            ],
+            "exclude": [
+                "**/toc.yml",
+                "**/toc.md"
+            ]
+        },
+        {
+            "files": "pdf/toc.yml"
+        }
+    ],
+    "resource": [
+        {
+            "files": [
+                "images/**"
+            ]
+        }
+    ],
+    "overwrite": [
+        {
+            "files": [
+                "apidoc/**.md"
+            ],
+            "exclude": [
+                "obj/**",
+                "_site/**"
+            ]
+        }
+    ],
+    "wkhtmltopdf": {
+        "additionalArguments": "--enable-local-file-access"
+    },
+    "dest": "_site_pdf"
+}
+```
+
+然后在docfx项目的根目录运行docfx，就可以在`_site_pdf`文件夹看到pdf文件了。**提示：这一过程可能会花费比较长的时间，建议喝杯咖啡等待。**
+
+![](https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20211206000157.png)
+
+其实，说实话，html的表现效果一定要比PDF文件强，这个是毋庸置疑的。
+
 ## 自定义
+
+
 
