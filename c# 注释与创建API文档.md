@@ -369,6 +369,18 @@
 
 其实，说实话，html的表现效果一定要比PDF文件强，这个是毋庸置疑的。
 
+### DOCFX 常用命令
+
+现在根据`docfx.json`中的设置，有下面几个命令（**之所以放到这里说是因为易懂性方面的考虑**）：
+
+- `docfx metadata` 根据src目录下的项目来修改api文件夹的内容，即生成API文档。
+- `docfx build` 生成网站源码，文件放在`_site`文件夹下。
+- `docfx serve <_site文件夹位置>`  创建本地服务器，可以本地访问API网站内容
+- `docfx pdf` 导出PDF。
+- `docfx` 执行docfx metadata、docfx build和docfx pdf。
+
+应该可以看到，DOCFX的命令的内容甚至是作用都和`docfx.json`中的配置是息息相关的，这个配置文件其实很好理解，主要记住`content`属性会规定命令会波及到哪些文件和会放过那些文件其实就可以了。遇到别的需求可以查阅[docfx.exe User Manual | DocFX website (dotnet.github.io)](https://dotnet.github.io/docfx/tutorial/docfx.exe_user_manual.html#3-docfxjson-format)，里面详细地记载了`docfx.json`中每个属性的作用。
+
 ## 自定义
 
 
