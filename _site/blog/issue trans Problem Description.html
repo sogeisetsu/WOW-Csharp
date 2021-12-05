@@ -1,0 +1,197 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Problem Description </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="Problem Description ">
+    <meta name="generator" content="docfx 2.58.9.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="../anycombine/toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="problem-description">Problem Description</h1>
+
+<h2 id="problem-recurrence">Problem recurrence</h2>
+<p>When I use <strong>English to Chinese translation, everything is normal</strong>, as shown below 👇</p>
+<pre><code class="lang-bash">suyuesheng@DESKTOP-OKC7OBA:~$ trans en:zh hello
+hello
+/həˈlō/
+
+你好
+(Nǐ hǎo)
+
+hello的定义
+[ English -&gt; 简体中文 ]
+
+感叹词
+    你好!
+        Hello!, Hi!, Hallo!
+    喂!
+        Hey!, Hello!
+
+hello
+    你好, 您好
+</code></pre>
+<p>But <strong>when translating Chinese into English, garbled characters will appear</strong>, as shown below👇</p>
+<pre><code class="lang-bash">suyuesheng@DESKTOP-OKC7OBA:~$ trans zh:en 好
+å¥½
+
+å¥½
+
+å¥½ 的翻译
+[ 简体中文 -&gt; English ]
+
+å¥½
+    å¥½, å ¥ ½
+</code></pre>
+<p><strong>I am using windows terminal</strong></p>
+<h2 id="locales">Locales</h2>
+<p><strong>My computer supports English and Chinese</strong>. I use the <code>locale -a</code> command to clearly see the following</p>
+<pre><code class="lang-bash">C
+C.UTF-8
+en_US.utf8
+POSIX
+zh_CN.utf8
+zh_HK.utf8
+zh_SG.utf8
+zh_TW.utf8
+</code></pre>
+<p>The locale of my computer is Chinese, when I use the <code>echo $LANG</code> command, the following👇</p>
+<pre><code class="lang-bash">zh_CN.utf8
+</code></pre>
+<p>I am using a font <code>fira code</code></p>
+<h1 id="my-version-information">My version information</h1>
+<p>The linux on my computer is ubuntu
+linux kernel version is<code>#1 SMP Wed Oct 28 23:40:43 UTC 2020</code>
+<strong><code>trans -v </code> is 👇</strong></p>
+<pre><code class="lang-bash">Translate Shell       0.9.6.6
+
+platform              Linux
+gawk (GNU Awk)        4.1.4
+fribidi (GNU FriBidi) 0.19.7
+audio player          [NOT INSTALLED]
+terminal pager        less
+terminal type         xterm-256color
+user locale           zh_CN.utf8 (Chinese Simplified)
+home language         zh-CN
+source language       auto
+target language       zh-CN
+translation engine    google
+proxy                 [NONE]
+user-agent            Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/602.1 (KHTML, like Gecko) Version/8.0 Safari/602.1 Epiphany/3.18.2
+theme                 default
+init file             [NONE]
+
+Report bugs to:       https://github.com/soimort/translate-shell/issues
+</code></pre>
+<hr>
+<p><strong>In order to make it easier for native Chinese speakers to clearly understand the issue I provided, I will attach the Chinese information here.</strong></p>
+<p><strong>使用wsl2</strong>，Linux发行版是Ubuntu。</p>
+<p>shell的语言环境是中文，<code>locale -a</code>包含中文和英文</p>
+<p>可以正常的从英文翻译成中文，但是一旦用中文翻译成英文就会乱码。就像下面这样👇</p>
+<pre><code class="lang-bash">suyuesheng@DESKTOP-OKC7OBA:~$ trans zh:en 好
+å¥½
+
+å¥½
+
+å¥½ 的翻译
+[ 简体中文 -&gt; English ]
+
+å¥½
+    å¥½, å ¥ ½
+</code></pre>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

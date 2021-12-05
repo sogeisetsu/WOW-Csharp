@@ -1,0 +1,4 @@
+- name: Articles
+  href: ../articles/toc.yml
+- name: Blog
+  href: ../blog/toc.yml

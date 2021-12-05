@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>&#25195;&#30450; </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="&#25195;&#30450; ">
+    <meta name="generator" content="docfx 2.58.9.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="../anycombine/toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+
+<p><strong>扫盲教程，本人能力有限，如有错误，请于评论区指出，不胜感谢，勿喷。</strong></p>
+<p>[TOC]</p>
+<h1 id="扫盲">扫盲</h1>
+<h2 id="什么是vscode">什么是vscode？</h2>
+<blockquote>
+<p>Visual Studio Code是一个轻量级但功能强大的源代码编辑器，可在您的桌面上运行，并且可用于Windows，macOS和Linux。 它具有对JavaScript，TypeScript和Node.js的内置支持，并具有丰富的其他语言（例如C，C＃，Java，Python，PHP，Go）和运行时（例如.NET和Unity）扩展的生态系统。 。 通过这些入门视频，从VS Code开始您的旅程。</p>
+<p>—— 节选自vscode官网</p>
+</blockquote>
+<h2 id="什么是git">什么是git</h2>
+<blockquote>
+<p>Git 和其它版本控制系统（包括 Subversion 和近似工具）的主要差别在于 Git 对待数据的方式。 从概念上来说，其它大部分系统以文件变更列表的方式存储信息，这类系统（CVS、Subversion、Perforce、Bazaar 等等） 将它们存储的信息看作是一组基本文件和每个文件随时间逐步累积的差异 （它们通常称作 <strong>基于差异（delta-based）</strong> 的版本控制）。</p>
+<p>——节选自Git官网</p>
+</blockquote>
+<p>也就是说<strong>vscode是一个编辑器</strong>，即使功能强大，也依然是编辑器。<strong>Git是版本控制软件，这个软件的特色是他储存版本的方式是去储存版本间的差异</strong></p>
+<h2 id="git概念简单解释">Git概念简单解释</h2>
+<p>既然要玩git了，建议了解git的命令行，<a href="https://git-scm.com/book/zh/v2/Git-%E5%9F%BA%E7%A1%80-%E8%8E%B7%E5%8F%96-Git-%E4%BB%93%E5%BA%93">Git - 获取 Git 仓库 (git-scm.com)</a>，这里不对命令行做过多解释。只说一下git的某些概念</p>
+<p>git的第一个概念是仓库，仓库里面有很多文件，仓库也记录了所有文件的版本(被提交过的)。</p>
+<p>一个文件的生命周期有三个阶段，分别是<code>work dir</code>、<code>HEAD</code>、<code>Index</code>。三者关系是进阶的，一个文件先由<code>work dir</code>上传到<code>index</code>，再由<code>index</code>上传到<code>HEAD</code>，再上传到<code>HEAD</code>之后，就会自动生成一个版本号，<strong>vscode里面将文件从<code>work dir</code>上传到<code>Index</code>的过程称之为暂存，将<code>Index</code>上传到<code>HEAD</code>的过程称之为提交</strong></p>
+<p><img src="https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20210510222123.png" alt="git工作流程"></p>
+<h3 id="版本回退">版本回退</h3>
+<p>Git里面有<code>work dir</code>、<code>Index</code>和<code>Head</code>的很大一个好处是可以方便的进行版本回退和撤销提交的操作。<a href="https://www.cnblogs.com/sogeisetsu/articles/12503911.html">git reset 和 checkout 以及HEAD COMMIT ADD详解 - sogeisetsu - 博客园 (cnblogs.com)</a></p>
+<p><img src="https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20210510225332.png" alt=""></p>
+<h3 id="远程仓库">远程仓库</h3>
+<p>比较著名的远程仓库有GitHub，gitee等。远程仓库保证了可以将本地文件储存到云端，保护了文件，并且方便协作。</p>
+<p><img src="https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20210510222743.png" alt=""></p>
+<h1 id="vscode对git的操作">vscode对git的操作</h1>
+<p>首先需要下载两个软件一个叫vscode、另一个叫GIT（废话）。下载链接如下👇</p>
+<ul>
+<li><a href="https://code.visualstudio.com/">Visual Studio Code - Code Editing. Redefined</a></li>
+<li><a href="https://git-scm.com/downloads">Git - Downloads (git-scm.com)</a></li>
+</ul>
+<h2 id="初始化一个仓库">初始化一个仓库</h2>
+<p>用vscode打开一个文件夹，在vscode的命令面板（<code>CTRL+shift+p</code>）输入<code>git init</code>将会出现选项点击即可。</p>
+<p><img src="https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20210510222910.png" alt=""></p>
+<h2 id="暂存和提交">暂存和提交</h2>
+<p>左边dock栏，源代码管理，选定文件，右键进行暂存和提交的操作，这个比较简单，按文字提示来就是了</p>
+<p><img src="https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20210510224051.png" alt=""></p>
+<h2 id="链接远程仓库">链接远程仓库</h2>
+<p>按下图操作，随后填git链接或者选择直接从GitHub中创建，全程傻瓜化操作，狂点下一步就完事儿了。</p>
+<p><img src="https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20210510224454.png" alt=""></p>
+<h2 id="版本回退-1">版本回退</h2>
+<p>两个方法，一个是在命令面板进行撤销操作。</p>
+<p><img src="https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20210510225027.png" alt=""></p>
+<p>第二个方法是安装插件，<code>Git Graph</code>  <a href="https://marketplace.visualstudio.com/items?itemName=mhutchie.git-graph">Git Graph - Visual Studio Marketplace</a>，右键点击checkout进行版本回退</p>
+<p><img src="https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20210510225252.png" alt=""></p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,216 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>&#21830;&#21697;&#19978;&#26550;&#26684;&#24335; </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="&#21830;&#21697;&#19978;&#26550;&#26684;&#24335; ">
+    <meta name="generator" content="docfx 2.58.9.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="../anycombine/toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="商品上架格式">商品上架格式</h1>
+
+<h2 id="商品上架前需要填写的表格">商品上架前需要填写的表格</h2>
+<p><img src="https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20210328000823.png" alt=""></p>
+<h2 id="表格内容解释">表格内容解释</h2>
+<ul>
+<li><code>bigname</code>  <strong>商品所属大类</strong>，比如，芒果的大类是水果，所以它的<code>bigname</code>就是<code>fruit</code>。注意：该大类是固定的，比如所有水果商品的大类都是<code>fruit</code>，所有糕点类产品的大类都是<code>gaodian</code>。现在有三个大类，具体所代表的属性会在后面解释。</li>
+<li><code>name</code> 商品所属小类，<strong>建议用商品名称的拼音来代替</strong>，小类属于大类的一部分，<strong>相同的大类下，不可以有相同<code>name</code>的小类。</strong></li>
+<li><code>title</code>  小程序上商品栏的名称，比如“越南精品芒果”，这个限制在7字以内</li>
+<li><code>desc</code> 商品简介</li>
+<li><code>tag</code> 商品的营销标签，选填，比如“爆款”</li>
+<li><code>price</code> 商品的价格，数字，单位是元</li>
+<li><code>origin-price</code>  商品的原价，在小程序之中，原价在价格的下面，并且原价被打×</li>
+<li><code>num</code> <strong>必填</strong> 默认为1，商品的原始数量。</li>
+<li><code>thumb</code> 商品的图片链接，比如<code>https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20210322004059.jfif</code>，获取图片链接的方法是在csdn上上传，然后在浏览器右键图片获取图片链接</li>
+</ul>
+<h2 id="小程序中的商品列表">小程序中的商品列表</h2>
+<p><img src="https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20210328000826.png" alt=""></p>
+<h2 id="商品列表标注">商品列表标注</h2>
+<p><img src="https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20210327234319.png" alt=""></p>
+<h2 id="json格式从数据库获取的格式">json格式（从数据库获取的格式）</h2>
+<p>这个格式是为了让大家理解每一个标签的具体意思</p>
+<p><img src="https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20210328000125.png" alt=""></p>
+<pre><code class="lang-json">fruit: {
+    mangguo: {
+        title: &quot;越南精品芒果&quot;,
+        desc: &quot;精品越南大青芒，越南进口&quot;,
+        price: 9.99,
+        tag: &quot;新品&quot;,
+        thumb: &quot;https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20210322004059.jfif&quot;,
+        originprice: 19.9,
+        num: 0
+    },
+    mangguo1: {
+        title: &quot;越南精品芒果&quot;,
+        desc: &quot;精品越南大青芒，越南进口&quot;,
+        price: 9.99,
+        tag: &quot;新品&quot;,
+        thumb: &quot;https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20210322004059.jfif&quot;,
+        originprice: 19.9,
+        num: 0
+    },
+    mangguo2: {
+        title: &quot;越南精品芒果&quot;,
+        desc: &quot;精品越南大青芒，越南进口&quot;,
+        price: 9.99,
+        tag: &quot;新品&quot;,
+        thumb: &quot;https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20210322004059.jfif&quot;,
+        originprice: 19.9,
+        num: 0
+
+    },
+    mangguo3: {
+        title: &quot;越南精品芒果&quot;,
+        desc: &quot;精品越南大青芒，越南进口&quot;,
+        price: 9.99,
+        tag: &quot;新品&quot;,
+        thumb: &quot;https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20210322004059.jfif&quot;,
+        originprice: 19.9,
+        num: 0
+
+    }
+
+},
+gaodian: {
+    mangguo: {
+        title: &quot;越南精品芒果&quot;,
+        desc: &quot;精品越南大青芒，越南进口&quot;,
+        price: 9.99,
+        tag: &quot;新品&quot;,
+        thumb: &quot;https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20210322004059.jfif&quot;,
+        originprice: 19.9,
+        num: 0
+
+    },
+    mangguo1: {
+        title: &quot;越南精品芒果&quot;,
+        desc: &quot;精品越南大青芒，越南进口&quot;,
+        price: 9.99,
+        tag: &quot;新品&quot;,
+        thumb: &quot;https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20210322004059.jfif&quot;,
+        originprice: 19.9,
+        num: 0
+
+    },
+    mangguo2: {
+        title: &quot;越南精品芒果&quot;,
+        desc: &quot;精品越南大青芒，越南进口&quot;,
+        price: 9.99,
+        tag: &quot;新品&quot;,
+        thumb: &quot;https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20210322004059.jfif&quot;,
+        originprice: 19.9,
+        num: 0
+
+    },
+    mangguo3: {
+        title: &quot;越南精品芒果&quot;,
+        desc: &quot;精品越南大青芒，越南进口&quot;,
+        price: 9.99,
+        tag: &quot;新品&quot;,
+        thumb: &quot;https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20210322004059.jfif&quot;,
+        originprice: 19.9,
+        num: 0
+
+    }
+
+}
+</code></pre>
+<h2 id="附件">附件</h2>
+<p>[excel表格 商品上架需要填写此表格](<a href="https://www.yuque.com/docs/share/0a3ed3bb-990e-419c-8111-6015d315bd56?#6edd">https://www.yuque.com/docs/share/0a3ed3bb-990e-419c-8111-6015d315bd56?#6edd</a> 《工作簿1》)</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

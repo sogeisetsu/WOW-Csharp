@@ -1,0 +1,258 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>python &#21253;&#65288;package&#65289;&#21644;&#27169;&#22359;&#65288;module&#65289;&#30340;&#21019;&#24314;&#21644;&#24341;&#20837;&#65288;import&#65289; </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="python &#21253;&#65288;package&#65289;&#21644;&#27169;&#22359;&#65288;module&#65289;&#30340;&#21019;&#24314;&#21644;&#24341;&#20837;&#65288;import&#65289; ">
+    <meta name="generator" content="docfx 2.58.9.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="../anycombine/toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="python-包package和模块module的创建和引入import">python 包（<code>package</code>）和模块（<code>module</code>）的创建和引入（<code>import</code>）</h1>
+
+<p><a href="https://creativecommons.org/licenses/by-nc-sa/3.0/us/"><img src="https://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png" alt="img"></a></p>
+<h2 id="名词解释">名词解释</h2>
+<blockquote>
+<p>实际上，Python中的函数(Function)、类(Class)、模块(Module)、包库(Package)，都是为了实现模块化引用，让程序的组织更清晰有条理。</p>
+<p>👉通常，函数、变量、类存储在被称为模块(Module)的.py文件中，一组模块文件又组成了包(Package)。</p>
+<p>👉将函数、变量、类存储在存储在独立的.py文件中，可隐藏代码实现的细节，将不同代码块重新组织，与主程序分离，简化主程序的逻辑，提高主程序的可读性。</p>
+<p>👉 有了包和模块文件，可以在其他不同程序中进行复用，还可以使用其他人开发的第三方依赖库。</p>
+<hr>
+<p>本引用为CSDN博主「虾米小馄饨」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/Bit_Coders/article/details/119318000</p>
+</blockquote>
+<p>package实际上就是就是一个文件夹，里面包含诸多module和一个<code>__init__.py</code>，package是module的一种，这点在python报错的时候也能看出来。</p>
+<h2 id="引入方式">引入方式</h2>
+<ol>
+<li><code>import moduleName</code></li>
+<li><code>import packageName</code></li>
+<li><code>from packageName import moduleName\packageName</code></li>
+<li><code>from moudleName import Function\Class</code></li>
+</ol>
+<h3 id="引入父级目录模块">引入父级目录模块</h3>
+<blockquote>
+<p>sys.path 是 sys 模块中的内置变量。它包含一个目录列表，编译器将搜索所需的模块。</p>
+</blockquote>
+<p>如果要引入父级模块，需要在引入之前需要在python的编译器的环境变量中添加当前文件父目录，然后再import，有两个添加方法</p>
+<ol>
+<li><code>sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))</code></li>
+<li><code>sys.path.append(&quot;..&quot;)</code></li>
+</ol>
+<p>建议使用第一个方法，第二个方法会在除pycharm以外的地方运行的时候造成错误，原因是<code>sys.path.append(&quot;..&quot;)</code>添加的是当前使用者所在目录的父目录，而不是当前这个文件的父目录。</p>
+<p><code>util.hi</code>是父级目录中的模块，引入方式如下：</p>
+<pre><code class="lang-python">import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+import util.hi
+</code></pre>
+<h3 id="注意事项">注意事项</h3>
+<ul>
+<li>✔️在没有<code>from</code>的情况下，<code>moduleName</code>的形式可以是通过附属关系按照<code>packageName.moduleName</code>使用。</li>
+<li>❌在有<code>from</code>的时候，<code>import</code>后面必须是包名称或者是函数名或者类名或者模块名。但是不能用<code>.</code>来表示层级关系，也就是说不能用向<code>packageName.moduleName</code>之类的用法，但是可以用<code>,</code>来区分不同的模块。</li>
+<li>✔️只有在有<code>from</code>的情况下，<code>import</code>后面才能跟函数名或者类名</li>
+</ul>
+<h3 id="示范">示范</h3>
+<p>这是<a id="当前环境">当前的环境</a>👇</p>
+<pre><code class="lang-powershell">.
+├── main.py
+├── test
+├── testproject
+│   ├── __init__.py
+│   ├── pa1
+│   │   ├── __init__.py
+│   │   └── hello.py
+│   └── testproject.py
+└── util
+
+</code></pre>
+<p>这是pa1目录下的<code>hello.py</code>👇，有一个函数<code>hello</code>和一个类<code>HelloT</code>。</p>
+<pre><code class="lang-python">import sys
+
+acb: str = &quot;1232&quot;
+
+
+def hello():
+    print(&quot;hello world&quot;)
+
+
+class HelloT:
+    def __init__(self) -&gt; None:
+        pass
+
+    def hello(self):
+        print(&quot;call&quot;, sys._getframe().f_code.co_name)
+
+</code></pre>
+<h4 id="正确示范">正确示范</h4>
+<p>下面示范在根目录下，main.py的<strong>正确import示范</strong>：</p>
+<pre><code class="lang-python"># 引入pa1包的hello.py模块
+from testproject.pa1 import hello
+# 引入pa1包
+import testproject.pa1
+# 引入hello.py模块
+import testproject.pa1.hello
+# 引入在testproject包的pa1包
+from testproject import pa1
+# 引入hello.py模块下的hello函数和HelloT类
+from testproject.pa1.hello import hello,HelloT
+</code></pre>
+<h4 id="错误示范">错误示范</h4>
+<p>下面示范在根目录下，main.py的<strong>错误import示范</strong>👇，错误原因请对照<a href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9">注意事项</a></p>
+<pre><code class="lang-python">from testproject import pa1.hello
+import testproject.pa1.hello.HelloT
+</code></pre>
+<h2 id="使用方式">使用方式</h2>
+<p>先看一下在引入默认模块（比如<code>os</code>、<code>math</code>、<code>random</code>）的时候，使用被引入的模块的方式：</p>
+<pre><code class="lang-python">&gt;&gt;&gt; import os
+&gt;&gt;&gt; os.path.abspath(&quot;.&quot;)
+'C:\\Users\\苏月晟\\Desktop\\pythonProject1'
+&gt;&gt;&gt; import math
+&gt;&gt;&gt; math.pi
+3.141592653589793
+&gt;&gt;&gt; import random
+&gt;&gt;&gt; random.random()
+0.11531493534041015
+</code></pre>
+<p>使用引入基本上只有两个要求，一个是别重名，一个是使用引入的时候所使用的被引入模块名字必须是和<code>import</code>后面的一模一样，比如说使用了<code>import testproject.pa1.hello</code>，那么想使用hello模块的时候必须用<code>testproject.pa1.hello</code>而不是<code>hello</code>。如果是使用了<code>from testproject.pa1 import hello</code>来引入hello模块，则在使用hello模块的时候直接用<code>hello</code>。</p>
+<p>可以看一下下面的示例来具体了解其中的差异：</p>
+<pre><code class="lang-python">&gt;&gt;&gt; import os.path
+&gt;&gt;&gt; path.abspath(&quot;.&quot;)
+Traceback (most recent call last):   
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+NameError: name 'path' is not defined
+&gt;&gt;&gt; os.path.abspath(&quot;.&quot;)
+'C:\\Users\\苏月晟\\Desktop\\pythonProject1'
+&gt;&gt;&gt; from os import path
+&gt;&gt;&gt; path.abspath(&quot;.&quot;)
+'C:\\Users\\苏月晟\\Desktop\\pythonProject1'
+</code></pre>
+<h3 id="使用模块中的常量">使用模块中的常量</h3>
+<p>只需要在模块中定义一个常量，然后在使用的时候用<code>模块名.常量名</code>就可以了，就像hello模块里面有一个常量<code>acb</code>，在引入hello模块之后，用<code>hello.acb</code>就可以调用常量<code>acb</code>了</p>
+<h2 id="创建方式">创建方式</h2>
+<p>创建包的时候，包目录里面必须有<code>__init__.py</code>，这个文件一般情况下可以是空的，具体这个文件怎么使用可以看<a href="https://www.cnblogs.com/Lands-ljk/p/5880483.html">Python <strong>init</strong>.py 作用详解 - Data&amp;Truth - 博客园 (cnblogs.com)</a></p>
+<p>看一下下面的目录结构</p>
+<pre><code class="lang-bash">.
+├── __init__.py
+├── pa1
+│   ├── __init__.py
+│   └── hello.py
+└── testproject.py
+</code></pre>
+<p>pa1是一个包，pa1目录下面有一个<code>__init__.py</code>，pa1下面还有一个<code>hello.py</code>，这个文件是一个模块。</p>
+<p>hello.py</p>
+<pre><code class="lang-python">import sys
+
+acb: str = &quot;1232&quot;
+
+
+def hello():
+    print(&quot;hello world&quot;)
+
+
+class HelloT:
+    def __init__(self) -&gt; None:
+        pass
+
+    def hello(self):
+        print(&quot;call&quot;, sys._getframe().f_code.co_name)
+
+</code></pre>
+<p>这样就创建了一个模块。</p>
+<h1 id="license">LICENSE</h1>
+<p><a href="https://creativecommons.org/licenses/by-nc-sa/3.0/us/"><img src="https://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png" alt="img"></a><a href="https://creativecommons.org/licenses/by-nc-sa/3.0/us/deed.zh">署名-非商业性使用-相同方式共享 3.0 美国 (CC BY-NC-SA 3.0 US)</a> © 2021 苏月晟。</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

@@ -1,0 +1,332 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>GIT &#30340;merge&#12289;rebase&#21644;cherry-pick&#21306;&#21035;&#21644;&#20351;&#29992;&#31034;&#20363; </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="GIT &#30340;merge&#12289;rebase&#21644;cherry-pick&#21306;&#21035;&#21644;&#20351;&#29992;&#31034;&#20363; ">
+    <meta name="generator" content="docfx 2.58.9.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="../anycombine/toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="git-的mergerebase和cherry-pick区别和使用示例">GIT 的merge、rebase和cherry-pick区别和使用示例</h1>
+
+<p><a href="https://creativecommons.org/licenses/by-nc-sa/3.0/us/"><img src="https://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png" alt="img"></a></p>
+<h2 id="名词解释">名词解释</h2>
+<p>就是大体说一下git的上传和撤销的工作流程，用<a href="https://marklodato.github.io/visual-git-guide/index-zh-cn.html#basic-usage">图解Git (marklodato.github.io)</a>的一张图就能说的很明白了</p>
+<p><img src="https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20211003175009.png" alt=""></p>
+<p>或者看这张图</p>
+<p><img src="https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20211003225301.svg" alt=""></p>
+<h2 id="当前环境">当前环境</h2>
+<p>有两个分支一个是<code>master</code>，另一个是<code>dev</code>，两个分支都指向同一个提交，并且两个分支的状态都是干净的。</p>
+<pre><code class="lang-shell">&gt;git status
+On branch master
+nothing to commit, working tree clean
+
+&gt;git switch dev
+Switched to branch 'dev'
+
+&gt;git status
+On branch dev
+nothing to commit, working tree clean
+
+</code></pre>
+<pre><code class="lang-powershell">&gt;git log
+commit a1fe48e0054054c026554f5ed527e886113b5718 (HEAD -&gt; dev, master)
+Author: suyuesheng &lt;df&gt;
+Date:   Sun Oct 3 16:29:12 2021 +0800
+
+    add diff.txt
+
+
+</code></pre>
+<h2 id="尝试使用merge">尝试使用merge</h2>
+<h3 id="分别修改两个分支并提交">①分别修改两个分支，并提交</h3>
+<p>现在将两个分支的<code>hello.pyx</code>各增加一句不同的话，并提交修改，现在分支状况如下：</p>
+<pre><code class="lang-powershell">&gt;git log --all --graph --pretty=oneline
+* 42a54922a38300eb091a714f092136c469718c82 (HEAD -&gt; master) diff master one
+| * 1e04ba0525d896e46ea6d01bbbd965c50d13d03a (dev) diff dev one
+|/
+* a1fe48e0054054c026554f5ed527e886113b5718 add diff.txt
+
+</code></pre>
+<h3 id="进行合并合并失败需处理冲突">②进行合并，合并失败，需处理冲突</h3>
+<p>现在尝试合并，因为两个分支各自都分别有新的提交，<strong>所谓合并就是合并该分支基于共同祖先的更改</strong>，因为合并dev分支之后会伤害到master分支所作的更改，所以会出现如下报错</p>
+<pre><code class="lang-powershell">&gt;git merge dev
+Auto-merging cythontest/hello.pyx
+CONFLICT (content): Merge conflict in cythontest/hello.pyx
+Automatic merge failed; fix conflicts and then commit the result.
+
+</code></pre>
+<p>工作目录中<code>hello.pyx</code>中也自动标记出了<a id="合并的冲突">合并的冲突</a></p>
+<pre><code class="lang-python">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+    print(&quot;diff master one&quot;)
+=======
+    print(&quot;diff dev one&quot;)
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; dev
+
+</code></pre>
+<h3 id="处理冲突">③处理冲突</h3>
+<p>尝试使用git自带的<code>mergetool</code>来处理冲突，当然也可以在工作目录中之间编辑冲突。</p>
+<p>键入<code>git mergetool</code></p>
+<pre><code class="lang-powershell">&gt;git mergetool
+
+This message is displayed because 'merge.tool' is not configured.
+See 'git mergetool --tool-help' or 'git help config' for more details.
+'git mergetool' will now attempt to use one of the following tools:
+tortoisemerge emerge vimdiff
+Merging:
+cythontest/hello.pyx
+
+Normal merge conflict for 'cythontest/hello.pyx':
+  {local}: modified file
+  {remote}: modified file
+Hit return to start merge resolution tool (vimdiff):
+
+</code></pre>
+<p>键入<code>回车</code></p>
+<p><img src="https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20211003171359.png" alt=""></p>
+<p>很明显，pycharm的终端抽风了，但是，这不重要。</p>
+<p>……</p>
+<p>我退出了git自带的mergetool——<code>vimdiff</code>,我在工作目录中修改冲突。修改如下</p>
+<pre><code class="lang-python">
+    print(&quot;diff master one&quot;)
+
+    print(&quot;diff dev one&quot;)
+
+
+</code></pre>
+<p>还记得刚键入<code>git merge dev</code>时工作目录中文件是什么鬼样子吗？忘了的话，<a href="#%E5%90%88%E5%B9%B6%E7%9A%84%E5%86%B2%E7%AA%81">回去看一下</a></p>
+<p>现在<strong>合并工作还没有完成，因为修改冲突之后的文件还没有提交</strong>，我们先看一下现在的状态，键入<code>git status</code></p>
+<pre><code class="lang-powershell">&gt;git status
+On branch master
+All conflicts fixed but you are still merging.
+  (use &quot;git commit&quot; to conclude merge)
+
+Changes to be committed:
+        modified:   cythontest/hello.pyx
+
+Changes not staged for commit:
+  (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+  (use &quot;git restore &lt;file&gt;...&quot; to discard changes in working directory)
+        modified:   cythontest/hello.pyx
+
+</code></pre>
+<p>git非常智能地告诉我们，现在还在合并中(<code>still merging</code>)，所以就按git提示地来键入<code>git commit</code>（先键入<code>git add .</code>，将处理冲突的结果加入暂存区）来结束合并（<code>conclude merge</code>）。shell出现如下回复：</p>
+<pre><code class="lang-powershell">&gt;git commit
+hint: Waiting for your editor to close the file...
+[main 2021-10-03T09:24:32.241Z] update#setState idle
+[master f45308b] Merge branch 'dev'
+
+</code></pre>
+<h3 id="合并完成">④合并完成</h3>
+<p>键入<code>git commit</code>之后会自动打开一个文件，然后按git的智能提示来关闭这个文件（close the file），合并完成。</p>
+<p>键入<code>git log --pretty=oneline --graph --all</code>看一下现在各个分支的状态</p>
+<pre><code class="lang-powershell">&gt;git log --pretty=oneline --graph --all
+*   f45308b77fc578dd17bcca7d7402285dca97bac0 (HEAD -&gt; master) Merge branch 'dev'
+|\
+| * 1e04ba0525d896e46ea6d01bbbd965c50d13d03a (dev) diff dev one
+* | 42a54922a38300eb091a714f092136c469718c82 diff master one
+|/
+* a1fe48e0054054c026554f5ed527e886113b5718 add diff.txt
+
+</code></pre>
+<p>可以看到合并成功，并且合并成功的修改被自动提交，提交信息为<code>Merge branch 'dev'</code>，当然，如果在处理冲突完之后使用<code>git commit -am “message”</code>也是可以完成合并的，只是提交信息是自定义的message而不是<code>Merge branch 'dev'</code>，其实<code>Merge branch 'dev'</code>就蛮好的，清楚明了。</p>
+<h3 id="理解">理解</h3>
+<p>合并分支，**只要两个分支各自都分别有新的提交，那么出现冲突是常态。**更关键的是，<strong>如果两个分支对同一个文件进行大幅度的不同的修改，那么合并分支是一件非常蛋疼的事情</strong>，所以建议，<strong>团队开发项目的时候，尽量避免两个人同时修改同一个文件的同一部分，严格按照面向对象编程</strong>，不同的人负责不同的功能。同时推荐使用图形化合并分支工具<a href="https://cloud.tencent.com/developer/article/1622950">Git diffmerge </a>，生活好难，使用gui工具不丢人。</p>
+<h2 id="尝试使用cherry-pick">尝试使用cherry-pick</h2>
+<p>git cherry-pick  应用一些现有提交引入的更改</p>
+<p>给定一个或多个现有提交，应用每个提交的更改，为每个提交记录一个新提交。这要求你的工作树是干净的（没有来自 HEAD 提交的修改）。</p>
+<p>具体可以看下面的图了解<code>cherry-pick</code></p>
+<p><img src="https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20211003183636.png" alt=""></p>
+<h3 id="当前环境-1">①当前环境</h3>
+<p>使用<code>git log --all --graph --pretty=oneline</code>查看两个分支的状态</p>
+<pre><code class="lang-powershell">&gt;git log --all --graph --pretty=oneline
+* c183b66776c6fdf25e9fde9b6f96d84fcd0bb4c1 (HEAD -&gt; dev)        deleted:    main.py
+* de561c32bd816415a8451e3360775d2c8f97b740 diff_dev_newfile_two
+| * d4c928527c7c7e16b53f918cc7a4834ec223e25f (master)   modified:   diff.txt
+| * b4bcbfdc058fb74e5780755b4deebefe743c6f5a    deleted:    diff_master_newfile_two.txt
+| * 1c836275343b27b85c3809f93f7c948c58c27b8d diff_master_newfile_two
+|/
+*   c4992fed883bc3c2fc04694e84f892972a37a050 Merge branch 'dev'
+|\
+| * 1e04ba0525d896e46ea6d01bbbd965c50d13d03a diff dev one
+* | 42a54922a38300eb091a714f092136c469718c82 diff master one
+|/
+* a1fe48e0054054c026554f5ed527e886113b5718 add diff.txt
+
+</code></pre>
+<p>在进行了<a href="#%E5%B0%9D%E8%AF%95%E4%BD%BF%E7%94%A8merge">尝试使用merge</a>之后，两个分支各自进行了若干次提交，<code>master</code>分支在几次提交之中，修改了<code>diff.txt</code>。<code>dev</code>分支增加了<code>diff_dev_newfile_two.txt</code>，删除了<code>main.py</code>。具体如下：</p>
+<pre><code class="lang-powershell">&gt;git diff master --stat
+ diff.txt                 | 14 ++------------
+ diff_dev_newfile_two.txt |  0
+ main.py                  | 29 -----------------------------
+ 3 files changed, 2 insertions(+), 41 deletions(-)
+
+</code></pre>
+<p>可以说目前两个分支差距比较大了，如果合并分支的话，必定有冲突。</p>
+<h3 id="进行cherry-pick">②进行<code>cherry-pick</code></h3>
+<p>使用<code>git cherry-pick master</code></p>
+<pre><code class="lang-powershell">&gt;git cherry-pick master
+[dev 29fc0b2]   modified:   diff.txt
+ Date: Sun Oct 3 18:34:53 2021 +0800
+ 1 file changed, 12 insertions(+), 2 deletions(-)
+
+</code></pre>
+<h3 id="cherry-pick完毕">③<code>cherry-pick</code>完毕</h3>
+<p>看到没有，没有出现任何的冲突，并且明明是有三个文件不一样，却只是一个文件改变了，这是为什么呢？因为<code>cherry-pick</code>是**&quot;复制&quot;一个提交节点并在当前分支做一次完全一样的新提交，**也就是说它只是复制了<code>master</code>分支最近的一次提交，那么我们<code>cherry-pick</code>的这次提交到底修改了那些部分呢？我们比较一下<code>master</code>最近两次提交的hash值，<code>git diff d4c9285 b4bcbfd --stat</code>结果如下：</p>
+<pre><code class="lang-powershell">&gt;git diff d4c9285 b4bcbfd --stat
+ diff.txt | 14 ++------------
+ 1 file changed, 2 insertions(+), 12 deletions(-)
+
+</code></pre>
+<p>可以看到我们<code>cherry-pick</code>的这次提交只修改了一个文件，所以，<code>cherry-pick</code>之后，也只修改了一个文件。</p>
+<h3 id="理解-1">理解</h3>
+<p><strong><code>cherry-pick</code>只是复制提交，也就是说被<code>cherry-pick</code>的节点提交了什么，那么进行<code>cherry-pick</code>的节点也将会提交什么。</strong></p>
+<p>甚至提交的message也是一样的，就像我们这次cherry-pick之后，两个节点的提交信息都是<code>modified:   diff.txt</code>。</p>
+<pre><code class="lang-powershell">* 29fc0b2 (HEAD -&gt; dev)         modified:   diff.txt
+* c183b66       deleted:    main.py
+* de561c3 diff_dev_newfile_two
+| * d4c9285 (master)    modified:   diff.txt
+
+</code></pre>
+<p>具体的，可以看下面的视频，讲解的很棒，来自<a href="https://www.youtube.com/watch?v=wIY824wWpu4&amp;ab_channel=Ihatetomatoes">Git cherry pick tutorial. How to use git cherry-pick. - YouTube</a>。</p>
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/wIY824wWpu4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe>
+<h2 id="尝试使用rebase">尝试使用rebase</h2>
+<p>rebase是合并命令的另一种选择。合并把两个父分支合并进行一次提交，提交历史不是线性的。衍合在当前分支上重演另一个分支的历史，提交历史是线性的。 本质上，这是线性化的自动的 <a href="#%E5%B0%9D%E8%AF%95%E4%BD%BF%E7%94%A8cherry-pick">cherry-pick</a></p>
+<p>变基的作用就是<strong>修整历史，将分支历史并入主线</strong>。</p>
+<p>这功能看起没没啥卵用，其实这功能是需要在某些场景下才会有明显作用，比如当我们向他人维护的开源项目提交修改时，肯定要先在自己的分支中进行开发，然后再提交，但如果我们变基后再提交，维护人员就不用进行整合工作了，直接快速合并即可。</p>
+<p><img src="https://marklodato.github.io/visual-git-guide/rebase.svg" alt=""></p>
+<h3 id="当前环境-2">①当前环境</h3>
+<p><img src="https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20211005014454.png" alt=""></p>
+<p>可以看到两个分支各自都有很多新的提交。</p>
+<p>两个分支的差别如下</p>
+<pre><code class="lang-powershell">git diff dev --stat
+
+ .gitignore               |  4 +++-
+ diff_dev_newfile_two.txt |  0
+ main.py                  | 29 +++++++++++++++++++++++++++++
+ 3 files changed, 32 insertions(+), 1 deletion(-)
+ 
+</code></pre>
+<p>可以看到修改了三个文件。</p>
+<h3 id="尝试rebase">②尝试rebase</h3>
+<p>先切换到dev分支，执行<code>git rebase master</code>，它和<code>cherry-pick</code>一样都只是复制提交，而没有进行合并操作。</p>
+<pre><code class="lang-powershell">&gt; git rebase master
+First, rewinding head to replay your work on top of it...
+Applying: diff_dev_newfile_two
+Applying:       deleted:    main.py
+
+</code></pre>
+<p><img src="https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20211005023011.png" alt=""></p>
+<p>可以看到，分支变直线了，然后，切换到master之后，再合并dev。提交历史变得异常整洁。</p>
+<h3 id="理解-2">③理解</h3>
+<blockquote>
+<p>一般我们这样做的目的是为了确保在向远程分支推送时能保持提交历史的整洁——例如向某个其他人维护的项目贡献代码时。 在这种情况下，你首先在自己的分支里进行开发，当开发完成时你需要先将你的代码变基到 <code>origin/master</code> 上，然后再向主项目提交修改。 这样的话，该项目的维护者就不再需要进行整合工作，只需要快进合并便可。</p>
+</blockquote>
+<h2 id="这几种不同的所谓的操作分支的方式有啥意义">这几种不同的所谓的操作分支的方式有啥意义？</h2>
+<p>我认为，我们学的是功能，而不是学的“意义”，“意义”的意思是使用场景，总有一个使用场景会用到特定的功能，可能这个使用场景因为习惯的原因，我们一辈子也遇不到一次，举个极端的例子，如果从始至终就是整个仓库就一条分支，那么就肯定很难遇到合并分支的操作。如果你的团队有几百个人，每个人都负责不同的一小部分，整个仓库有上百条分支，那么变基这事就显得尤为重要，要不然就太乱了，一个芝麻大小的功能更新不配让提交历史变得杂乱。就像git官网说的这样👇</p>
+<blockquote>
+<p>至此，你已在实战中学习了变基和合并的用法，你一定会想问，到底哪种方式更好。 在回答这个问题之前，让我们退后一步，想讨论一下提交历史到底意味着什么。</p>
+<p>有一种观点认为，仓库的提交历史即是 <strong>记录实际发生过什么</strong>。 它是针对历史的文档，本身就有价值，不能乱改。 从这个角度看来，改变提交历史是一种亵渎，你使用 <em>谎言</em> 掩盖了实际发生过的事情。 如果由合并产生的提交历史是一团糟怎么办？ 既然事实就是如此，那么这些痕迹就应该被保留下来，让后人能够查阅。</p>
+<p>另一种观点则正好相反，他们认为提交历史是 <strong>项目过程中发生的事</strong>。 没人会出版一本书的第一版草稿，软件维护手册也是需要反复修订才能方便使用。 持这一观点的人会使用 <code>rebase</code> 及 <code>filter-branch</code> 等工具来编写故事，怎么方便后来的读者就怎么写。</p>
+<p>现在，让我们回到之前的问题上来，到底合并还是变基好？希望你能明白，这并没有一个简单的答案。 Git 是一个非常强大的工具，它允许你对提交历史做许多事情，但每个团队、每个项目对此的需求并不相同。 既然你已经分别学习了两者的用法，相信你能够根据实际情况作出明智的选择。</p>
+<p>总的原则是，只对尚未推送或分享给别人的本地修改执行变基操作清理历史， 从不对已推送至别处的提交执行变基操作，这样，你才能享受到两种方式带来的便利。</p>
+</blockquote>
+<h2 id="license">LICENSE</h2>
+<p>本文使用的部分图片来自<a href="https://marklodato.github.io/visual-git-guide/index-zh-cn.html">图解Git (marklodato.github.io)</a>，Copyright © 2010, <a href="mailto:lodatom@gmail.com">Mark Lodato</a>. Chinese translation © 2012, <a href="mailto:ellrywych@gmail.com">wych</a>. <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/us/"><img src="https://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png" alt="img"></a> 采用<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/us/">创用CC 姓名标示-非商业性-相同方式分享3.0 美国授权条款</a>授权。本文嵌入的视频视频详细信息点击<a href="https://youtu.be/wIY824wWpu4">YouTube</a>。除文中已经表明引用的部分之外的其他部分版权来自<a href="https://creativecommons.org/licenses/by-nc-sa/3.0/us/"><img src="https://i.creativecommons.org/l/by-nc-sa/3.0/us/80x15.png" alt="img"></a><a href="https://creativecommons.org/licenses/by-nc-sa/3.0/us/deed.zh">署名-非商业性使用-相同方式共享 3.0 美国 (CC BY-NC-SA 3.0 US)</a> © 2021 苏月晟。</p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

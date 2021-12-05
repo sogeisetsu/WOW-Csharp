@@ -1,0 +1,141 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>&#25105;&#30340;python&#21152;&#23494;&#26041;&#26696; </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="&#25105;&#30340;python&#21152;&#23494;&#26041;&#26696; ">
+    <meta name="generator" content="docfx 2.58.9.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="../anycombine/toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="我的python加密方案">我的python加密方案</h1>
+
+<h2 id="前言">前言</h2>
+<p><strong>首先，pyhon是动态语言，解释型语言，边编译边运行的特点就决定了他不太好加密，在现有的加密方案里面，只要有心，绝大部分都能被破解(被别人看到源代码)，这是现实。</strong></p>
+<p>知乎👇这篇文章将现有的几个方案的利弊说的很清楚</p>
+<p>如何保护你的 Python 代码 （一）—— 现有加密方案 - Prodesire的文章 - 知乎 <a href="https://zhuanlan.zhihu.com/p/54296517">https://zhuanlan.zhihu.com/p/54296517</a></p>
+<p>那么我们应该怎么办呢？</p>
+<p>笔者的建议是，<strong>如果代码写的足够好</strong>，<strong>那就直接开源</strong>，开源带给你的声誉和利益可能远高于闭源，这个可以参考Linux kernel。</p>
+<p><strong>如果代码写的一般</strong>，那么开源的意义就不大了，<strong>如果你的代码偏服务类，那么可以采用搭建服务器，提供web服务</strong>，当然了，这个也不是万能，一是web服务几乎相当于把后端接口和接口的使用方法全部告诉了前端，前端代码写的不咋地的话，很容易就被爬虫了，当然，如果后端代码写的不咋地但前端写的很到位，一样会被爬虫。<strong>防止爬虫是前端和后端都应该考虑的事情</strong>，比如说，数据库应该对核心数据进行一定程度上的加密，就像对密码进行md5加密。再比如说增加ip地址检测机制，再再比如说，前端往后端传数据的时候，蓄意传一些没啥用的假数据，迷惑一下对手，再比如说整些伪元素，数据放css的content里面，想拿数据是吧？先看懂我的js和css再说！或者说修改字符集，123变成321之类的，具体的各大公司的反爬虫手段都在这了👉<a href="https://www.cnblogs.com/zale-blogs/p/9223089.html">各大前端巨头反爬虫策略 - 爬虫一只 - 博客园 (cnblogs.com)</a>，但是，<strong>如果你写的代码压根就不适合提供web服务，比如说你卖脚本，那就没办法了，web服务不适合你。</strong></p>
+<p><strong>既无法开源又无法做web服务，还不想用c语言重写核心代码，那就只能想着进行加密了。</strong></p>
+<h2 id="我的加密方案">我的加密方案</h2>
+<p>首先，咱要明白咱为什么要加密</p>
+<ol>
+<li>防止源代码被别人看到，别人窃取源代码</li>
+<li>防止别人虽然看不到源代码或者看不懂源代码，但是已经明白了如何调用你程序的API。</li>
+</ol>
+<h3 id="第一步代码混肴">第一步——代码混肴</h3>
+<p>为了解决上面两个问题，咱们要做的第一件事情就是代码混肴，这一部分的目的就是让你看不懂我的源代码。</p>
+<h3 id="第二步cpython编译核心文件">第二步——Cpython编译核心文件</h3>
+<p>使用 <code>Cython</code> 进行开发的步骤也不复杂。</p>
+<p>1）编写文件 <code>hello.pyx</code> 或 <code>hello.py</code>：</p>
+<pre><code class="lang-python">def hello():
+    print('hello')
+</code></pre>
+<p>2）编写 <code>setup.py</code>：</p>
+<pre><code class="lang-python">from distutils.core import setup
+from Cython.Build import cythonize
+
+setup(name='Hello World app',
+     ext_modules=cythonize('hello.pyx'))
+</code></pre>
+<p>3）编译为 <code>.c</code>，再进一步编译为 <code>.so</code> 或 <code>.pyd</code>：</p>
+<pre><code class="lang-bash">python setup.py build_ext --inplace
+</code></pre>
+<h3 id="第三步mainpy编写加入混肴试听的假参数加入自爆程序">第三步——main.py编写，加入混肴试听的假参数，加入自爆程序</h3>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>

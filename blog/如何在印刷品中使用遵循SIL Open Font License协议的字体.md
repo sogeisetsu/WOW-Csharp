@@ -1,0 +1,51 @@
+# 如何在印刷品中使用遵循SIL Open Font License协议的字体
+
+昨天在知乎看到了一个问题：[( 如何在设计中声明字体开源许可证？ - 知乎 (zhihu.com)](https://www.zhihu.com/question/35248944/answer/2179196722)。恰好最近在研究一些开源协议，所以想要根据原有的协议条款来分析一下如何在印刷品中使用开源字体。我在知乎上面写了一个回答以后感觉有些片面，所以在这里补充一下。
+
+==以下内容，仅供参考，并非法律建议。==
+
+## 什么是开源字体
+
+先明确一个事情，**开源字体指的是字体软件**，**“字型软件”可以包括源文件(source files)、构建脚本 (build script) 以及说明文档**。根据我之前的了解，依照**美国**的现有法律，针对字体的版权是只针对字体软件的，而字体本身往往是被看作社会共有财富的一部分。所谓的字体授权，是围绕在字体软件周围的。在SIL Open Font License里面也明确表示了是针对字体软件（font software）。但是，虽然是针对的字体软件，但并不意味着就可以随意使用这个字体，在现在这个时代，大多数印刷品使用字体的方式应该就是在电脑导入字体软件，然后使用该字体然后打印，**除非是在印刷品上用手画了一个和原字体一样的字体，不然，还是要遵守协议的。**
+
+## 如何使用
+
+先说结论：**印刷品可以使用这个字体并且使用了该字体的印刷品可以商用，印刷品无需因使用这个字体而使用和原字体同样的声明，印刷品无需因使用了SIL Open Font License下授权的字体而包含该字体的授权条款和版权声明。用人话说就是“放心大胆的使就行，不用在印刷品里面添加这个字体所使用的授权声明”。**但是，印刷品在电脑上的源文件，比如**包含字体源文件**的`psd`、`word`等，如果使用了该协议授权的字体，那么还是需要在分发源文件的时候声明所使用字体的版权（声明方式可以是印刷品源文件和字体版权协议放在同一个文件夹下）。如果**印刷品源文件只是设置使用什么字体而没有在源文件中包含字体软件的任何部分**（比如说，我设置使用宋体，但是最终显示的效果要取决于你的电脑上有没有安装这个字体。文字工作者应该很好理解这个和包含字体源文件的区别。）就不用声明字体授权了。
+
+下面是详细解释：
+
+首先，==Source Han Sans使用的是SIL Open Font License。==
+
+==OFL允许以本授权释出的字型自由地使用、研究、修改和再分发(redistributed)，而该释出字型不得被单独销售。==但是使用该字体的软件是可以售卖的，**也就是说，使用这个字体的产品是可以商用的。**
+
+在SIL Open Font License中针对**使用该字体的文档**的声明是这样的：
+
+> The Font Software, modified or unmodified, in part or in whole,must be distributed entirely under this license, and must not be distributed under any other license. The requirement for fonts to remain under this license does not apply to any document created using the Font Software.
+
+翻译成中文就是：
+
+> “字型软件”，无论已修改或未修改、部分或整体，均必须完全通过本授权下分发，不得在任何其他授权条款下分发。本授权针对释出字型“必须以同样授权释出”的要求规定，并不适用于任何使用该“字型软件”创建的任何文档。
+
+也就是说使用该字体的任何文档都不需要强制在这个协议下分发，你的印刷品完全可以不使用这个协议去使用其他的协议或者保留你关于这个印刷品的所有版权。
+
+但是，这只是说，“你的印刷品”**在发布的时候无须沿用这个协议**，但是既然使用了这个字体，你必须遵守这个字体的协议。关于对这个**字体的使用**，该协议是这样规定的：
+
+> Original or Modified Versions of the Font Software may be bundled,redistributed and/or sold with any software, provided that each copy contains the above copyright notice and this license. These can be included either as stand-alone text files, human-readable headers or in the appropriate machine-readable metadata fields within text or binary files as long as those fields can be easily viewed by the user.
+
+翻译成中文：
+
+> “字型软件”的“原始版本”或“修改版本”可以与任何软件捆绑 (bundled)、再分发以及／或一并销售，前提为每份软件副本都必须包含本授权条款上述的版权声明 (copyright notice) 以及本授权条款全文。这些版权声明与条款全文可以被放置在独立纯文本文件、人类可读信息头、或文本／二进制文件内适当的、用户易于查阅浏览的机器可读元数据字段。
+
+对标注==所使用字体及字体修改版本==的版权声明要求仅适用于软件（software）。现在就只有一个问题了，印刷品是否属于软件？这个问题不要想当然，我们看一下有没有相关的内容或者法律条文去指定软件的范围。我通过网络查询了一下，软件最基本的定义就是“**软件需有硬件才能运作**”。如此看来印刷品绝非软件。
+
+如此看来，**印刷品可以使用这个字体并且使用了该字体的印刷品可以商用，印刷品无需因使用这个字体而使用和原字体同样的声明，印刷品无需因使用了SIL Open Font License下授权的字体而包含该字体的授权条款和版权声明。用人话说就是“放心大胆的使就行，不用在印刷品里面添加这个字体所使用的授权声明”。**
+
+# 开源软件的一般规律
+
+常见的开源软件**一般**都是可以自由使用的，这个自由不是免费而是freedom。也就是说，仅限自己使用开源软件而不涉及分发的话，是不用担心授权问题的。如果涉及分发就需要具体问题具体分析了。
+
+# LICENSE
+
+copyright © 2021 苏月晟，版权所有。
+
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br />本<span xmlns:dct="http://purl.org/dc/terms/" href="http://purl.org/dc/dcmitype/Text" rel="dct:type">作品</span>由<span xmlns:cc="http://creativecommons.org/ns#" property="cc:attributionName">苏月晟</span>采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。

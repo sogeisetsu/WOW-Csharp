@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>&#31227;&#21160;web&#31471;&#24320;&#21457;&#20043;&#23545;&#24494;&#20449;&#25903;&#20184;&#25991;&#26723;&#30340;&#33258;&#25105;&#29702;&#35299; </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content="&#31227;&#21160;web&#31471;&#24320;&#21457;&#20043;&#23545;&#24494;&#20449;&#25903;&#20184;&#25991;&#26723;&#30340;&#33258;&#25105;&#29702;&#35299; ">
+    <meta name="generator" content="docfx 2.58.9.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="../anycombine/toc.html">
+    
+    
+    
+  </head>
+  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="">
+<h1 id="移动web端开发之对微信支付文档的自我理解">移动web端开发之对微信支付文档的自我理解</h1>
+
+<p><a href="https://pay.weixin.qq.com/wiki/doc/apiv3/wxpay/pages/index.shtml">微信支付开发者文档 (qq.com)</a></p>
+<h2 id="前端开发中微信支付的分类">前端开发中微信支付的分类</h2>
+<p>在移动前端开发中微信支付大概可以分成两部分，分别是<strong>网页调用微信支付和小程序调用微信支付</strong>，其中网页调用微信支付又可以分为微信内置浏览器(微信公众号)调用微信支付和普通浏览器H5页面调用微信支付。</p>
+<p>微信支付开发文档中，对H5支付是这样描述的</p>
+<blockquote>
+<p>H5支付是指商户在<strong>微信客户端外的移动端网页展示商品或服务</strong>，用户在前述页面确认使用微信支付时，商户发起本服务呼起微信客户端进行支付。</p>
+<p><strong>说明：<strong>要求商户已有H5商城网站，并且</strong>已经过ICP备案</strong>，即可申请接入。</p>
+</blockquote>
+<p>微信支付中对<code>jsapi</code>支付是这样描述的</p>
+<blockquote>
+<p>JSAPI支付适用于线下场所、<strong>公众号场景和PC网站场景</strong>。</p>
+<p>商户已有H5商城网站，<strong>用户通过消息或扫描二维码在微信内打开网页时，可以调用微信支付完成下单购买的流程。</strong></p>
+</blockquote>
+<p>也就是说可以有以下这个表格来展示移动前端调用微信支付</p>
+<ul>
+<li>web调用微信支付
+<ul>
+<li><strong>微信内置浏览器外网页调用微信支付</strong>使用<strong>H5专属微信支付文档</strong>调用微信支付 <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/open/pay/chapter2_6_0.shtml">微信支付-开发者文档 (qq.com)</a></li>
+<li><strong>微信内置浏览器调用微信支付</strong>使用 **<code>JSAPI</code>**调用微信支付 <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/open/pay/chapter1_1_1.shtml">微信支付-普通下单开发者文档 (qq.com)</a></li>
+</ul>
+</li>
+<li>小程序调用微信支付
+<ul>
+<li>使用 小程序专属调用微信支付文档开发 <a href="https://pay.weixin.qq.com/wiki/doc/apiv3/open/pay/chapter2_8_0.shtml">微信支付-开发者文档 (qq.com)</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="移动前端网页调用微信支付面临的两难困境">移动前端网页调用微信支付面临的两难困境</h2>
+<p>首先，从技术上来说，H5专用微信支付和<code>JSAPI</code>调用微信支付实际上是大同小异，也就是说这两者开发的难度基本一致，开发的过程也大差不差，这两个会一个就能很快地掌握另一个。通过JavaScript来分辨当前浏览器是否是微信内置浏览器也是可以实现的，也就是说<strong>一套代码既可以在微信内置浏览器支付也可以在微信以外的浏览器支付</strong>在技术上是完全可行的。但是，同样都是网页，却要用两种方式进行支付难免让人不爽！</p>
+<p>其实，微信的做法在技术和商业是完全可以理解的，首先，因为调用支付有两种方式，势必会让一部分开发者选择JSAPI进行微信内置浏览器的支付，<strong>这样就会把一部分用户的支付行为完全地锁在微信客户端内进行</strong>，而不是微信客户端以外的部分调用微信客户端进行支付，其次，微信内置浏览器的支付行为有很大一部分是和微信公众号相联系的，按照正常的小平台的逻辑（比如我现在开发的这个平台），<strong>一般的思路是微信公众号打开网页→网页通过微信公众号获取微信用户信息→将微信用户信息转换为当前网页的用户信息，并储存在数据库上面→调用微信支付</strong>。这样微信支付势必会发生在也只能发生在微信的内置浏览器上面。</p>
+<p>但是，<strong>微信内置浏览器的支付又会产生另一个问题，无法调用支付宝支付</strong>，是不是似乎能真正地理解微信的“良苦用心”了？也是，微信肯定不允许你用着我微信平台的公众号却用支付宝进行支付这种行为的。当然了，如果就是想让用户用着微信公众号却用支付宝进行支付也不是没有办法，引导用户打开浏览器进行支付宝支付不就行了，就像下面这幅图一样👇，<a href="https://blog.csdn.net/github_37847992/article/details/106459071">浅谈微信内置浏览器调用支付宝支付完整教程《1》CSDN博客</a>，所以，应该根据你的web前端服务对象来选取如何进行调用微信支付。</p>
+<p><img src="https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20210328210749.png" alt=""></p>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+                <h5>In This Article</h5>
+                <div></div>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
