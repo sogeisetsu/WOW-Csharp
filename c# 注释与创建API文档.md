@@ -8,11 +8,192 @@
 
 前往[Releases · dotnet/docfx (github.com)](https://github.com/dotnet/docfx/releases)下载最新版的DOCFX。将其加入环境变量，这样为了方便起见，docfx 命令可以直接从任何地方调用。(例如，对于 Windows，设置 `PATH =%PATH%;d:docfx`)。
 
-1. 运行`docfx init-q`。这个命令生成一个 docfx _ project 文件夹，其下面有默认的 docfx.json 文件。Json 是 docfx 用来生成文档的配置文件。- q 选项意味着使用默认值悄悄地生成项目，您也可以尝试 docfx init，并按照说明提供自己的设置。
+1. 运行`docfx init-q`。这个命令生成一个 `docfx_project` 文件夹，其下面有默认的 `docfx.json` 文件。**Json 是 docfx 用来生成文档的配置文件。**`-q` 选项意味着使用默认值悄悄地生成项目，您也可以尝试 `docfx init`，并按照说明提供自己的设置。
 
-2. 运行命令 `docfx docfx_project/docfx.json`。请注意，在该文件夹下生成了一个新的子文件夹 _site。这是生成静态网站的地方。
+2. 运行命令 `docfx docfx_project/docfx.json`。请注意，**在该文件夹下生成了一个新的子文件夹 `_site`。这是生成静态网站的地方。**
 
-3. 运行`docfx serve docfx_project/_site`就可以从http://localhost:8080查看生成的网页
+3. 运行`docfx serve docfx_project/_site`就可以从http://localhost:8080查看生成的网页。如果未使用端口 8080，docfx 将在 http://localhost:8080 下托管 `_site`。如果8080正在使用，可以**使用`docfx serve _site -p <port>`更改docfx使用的端口。**
 
    ![walkthrough_simple_homepage.png (1026×640) (dotnet.github.io)](https://dotnet.github.io/docfx/tutorial/walkthrough/images/walkthrough_simple_homepage.png)
+
+### 向网站添加文章
+
+在进行初始化和创建网站之后，当前的`docfx_project`文件结构应该是这样的：
+
+```bash
+.
+├── _site
+├── api
+├── apidoc
+├── articles
+├── docfx.json
+├── images
+├── index.md
+├── obj
+├── src
+└── toc.yml
+```
+
+各个文件和文件夹的作用如下：
+
+**/** - 这个网站的根目录，包含:
+
+- **docfx.json** - docfx 依赖的配置文件。
+- **index.md** - 用来创建网站的首页。
+- **toc.yml** – 呈现为导航菜单栏，显示在网站每个页面的顶部。
+
+**/articles** - 里面放着一些markdown文件。这些markdown文件的图片放在`/images`下。 这些 Markdown 文件发布在菜单栏的**Ariticles**部分下。
+
+**/src** - 包含可选的 .NET 语言项目文件 (*.csproj)，其中包含用于生成托管 API 文档的类型信息。
+
+**/apidoc** - 包含用于覆盖根据注释中自动生成的文本的 Markdown 文件。
+
+运行 DocFx 后，将创建其他文件夹： 
+
+**/_site** - 包含由 DocFx 生成的所有站点文件，包括网站所需的生成的 HTML/JSON/JS/Images 文件。
+
+#### 修改首页
+
+可以修改根目录下的index.md来修改网站的首页
+
+![](https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20211205144015.png)
+
+#### 将更多的文章放到网站
+
+1. 将更多`.md`文件放入`articles`，例如`快速开始.md`，`演练.md`，`进阶.md`。如果文件引用了任何资源，请将这些资源放入`images`文件夹中。
+
+2. 为了组织这些文章，我们将这些文件添加到`/articles/toc.yml`（也可以使用工具[Release 用于自动生成docfx文档 · whuanle/CZGL.DocfxBuild.Yml (github.com)](https://github.com/whuanle/CZGL.DocfxBuild.Yml/releases/tag/1.0)自动生成目录）。内容`toc.yml`如下：
+
+   ```yaml
+   - name: 快速开始
+     href: intro.md
+   - name: 演练
+     href: 演练.md
+   - name: 进阶
+     href: 进阶.md
+   ```
+
+   现在`articles`文件夹的布局是：
+
+   ```bash
+   .
+   ├── intro.md
+   ├── toc.yml
+   ├── 演练.md
+   └── 进阶.md
+   ```
+
+3. 在`docfx_project`文件夹下运行`docfx`和`docfx serve _site`，然后就可以看到已经有文章加入:
+
+   ![](https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20211205145707.png)
+
+#### 修改导航菜单栏
+
+![](https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20211205145855.png)
+
+导航菜单栏默认有两个选项，分别是`Articles`和`API Documentation`，可以通过修改根目录下的`toc.yml`来修改导航菜单栏的名称：
+
+```yml
+- name: 开始
+  href: articles/
+- name: Api 文档
+  href: api/
+  # homepage来定义api的首页
+  homepage: api/index.md
+```
+
+![](https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20211205150715.png)
+
+也可以向导航菜单栏增加新的选项，比如说，在根目录新建一个文件夹，命名为`blog`，该文件夹结构如下：
+
+```bash
+.
+├── GIT 的merge、rebase和cherry-pick.md
+├── Google Fonts注意事项.md
+├── Linux笔记.md
+├── issue trans Problem Description.md
+├── python 包（package）和模块（module）的创建和引入（import）.md
+├── toc.yml
+├── unix bsd linux shell bash GNU之间的联系，歪讲Linux(一).md
+├── vscode git 无需命令行.md
+├── 一.md
+├── 关于若干问题的解释说明.md
+├── 商品上架格式.md
+├── 如何在印刷品中使用遵循SIL Open Font License协议的字体.md
+├── 对微信支付文档的自我理解.md
+├── 我的python加密方案.md
+├── 找人.md
+├── 日语 时间的量.md
+├── 日语学习资源的分享.md
+├── 说明.md
+├── 贝多芬小传.md
+├── 还没有学会告别，就已经后会无期。.md
+├── 雷电接口.md
+└── 青岛科技大学新生报考参考.md
+```
+
+在该文件夹内添加`toc.yml`，内容如下：
+
+```yaml
+### D:\blog
+- name: GIT 的merge、rebase和cherry-pick
+  href: GIT 的merge、rebase和cherry-pick.md
+- name: Google Fonts注意事项
+  href: Google Fonts注意事项.md
+- name: issue trans Problem Description
+  href: issue trans Problem Description.md
+- name: Linux笔记
+  href: Linux笔记.md
+- name: python 包（package）和模块（module）的创建和引入（import）
+  href: python 包（package）和模块（module）的创建和引入（import）.md
+- name: unix bsd linux shell bash GNU之间的联系，歪讲Linux(一)
+  href: unix bsd linux shell bash GNU之间的联系，歪讲Linux(一).md
+- name: vscode git 无需命令行
+  href: vscode git 无需命令行.md
+- name: 一
+  href: 一.md
+- name: 关于若干问题的解释说明
+  href: 关于若干问题的解释说明.md
+- name: 商品上架格式
+  href: 商品上架格式.md
+- name: 如何在印刷品中使用遵循SIL Open Font License协议的字体
+  href: 如何在印刷品中使用遵循SIL Open Font License协议的字体.md
+- name: 对微信支付文档的自我理解
+  href: 对微信支付文档的自我理解.md
+- name: 我的python加密方案
+  href: 我的python加密方案.md
+- name: 找人
+  href: 找人.md
+- name: 日语 时间的量
+  href: 日语 时间的量.md
+- name: 日语学习资源的分享
+  href: 日语学习资源的分享.md
+- name: 说明
+  href: 说明.md
+- name: 贝多芬小传
+  href: 贝多芬小传.md
+- name: 还没有学会告别，就已经后会无期。
+  href: 还没有学会告别，就已经后会无期。.md
+- name: 雷电接口
+  href: 雷电接口.md
+- name: 青岛科技大学新生报考参考
+  href: 青岛科技大学新生报考参考.md
+```
+
+修改根目录的`toc.yml`，将blog文件夹加进去：
+
+```yaml
+- name: 开始
+  href: articles/
+- name: Api 文档
+  href: api/
+  homepage: api/index.md
+- name: 博客
+  href: blog/
+  homepage: blog/GIT 的merge、rebase和cherry-pick.md
+```
+
+在`docfx_project`文件夹下运行`docfx`和`docfx serve _site`，然后就可以看到已经有文章加入:
+
+![](https://suyuesheng-biaozhun-blog-tupian.oss-cn-qingdao.aliyuncs.com/blogimg/20211205154207.png)
 
