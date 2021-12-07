@@ -383,5 +383,26 @@
 
 ## 自定义
 
+### template
+
+运行命令`docfx template list`，可看到内置的模板列表：
+
+```bash
+Existing embedded templates are:
+        common
+        default(zh-cn)
+        default
+        pdf.default
+        statictoc
+```
+
+可以在docfx,json中的build属性的template属性中设置模板：
+
+```json
+"template": [
+    "default(zh-cn)"
+],
+```
+
 
 
