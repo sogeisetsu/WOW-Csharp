@@ -73,7 +73,10 @@
     "cleanupCacheHistory": false,
     "disableGitFeatures": false,
     "globalMetadata": {
-      "_enableSearch": "true"
+      "_enableSearch": "true",
+      "_appTitle": "演示文档制作",
+      "_gitUrlPattern": "https://github.com/sogeisetsu/WOW-Csharp/tree/docfx_example",
+      "_disableContribution": "false"
     }
   },
   "pdf": {
