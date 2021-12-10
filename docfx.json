@@ -63,6 +63,7 @@
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
+      "templates/default",
       "default(zh-cn)"
     ],
     "postProcessors": [],
@@ -70,7 +71,10 @@
     "noLangKeyword": false,
     "keepFileLink": false,
     "cleanupCacheHistory": false,
-    "disableGitFeatures": false
+    "disableGitFeatures": false,
+    "globalMetadata": {
+      "_enableSearch": "true"
+    }
   },
   "pdf": {
     "content": [
