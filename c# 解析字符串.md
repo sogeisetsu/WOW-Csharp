@@ -230,7 +230,7 @@ else
 对 JsonElement 的搜索需要对属性进行顺序搜索，因此速度相对较慢（例如在使用 TryGetProperty 时）。 System.Text.Json 旨在最小化初始解析时间而不是查找时间。因此，在搜索 JsonDocument 对象时使用以下方法来优化性能：
 
 - 使用内置的枚举器（EnumerateArray 和 EnumerateObject）而不是自己做索引或循环。不要对**数组形式的`JsonElement`**进行诸如`students[1]`的操作。
-- 不要使用 RootElement 通过每个属性对整个 JsonDocument 进行顺序搜索。相反，**根据 JSON 数据的已知结构搜索嵌套的 JSON 对象。**也就是说不要进行不必要的搜索，要根据自己对所操作的JSON的最大了解程度来进行搜索，比如明知道某个json数组里面没有自己想要的数据，就别去对它进行一遍又一遍的搜索
+- 不要使用 RootElement 通过每个属性对整个 JsonDocument 进行顺序搜索。相反，**根据 JSON 数据的已知结构搜索嵌套的 JSON 对象。**也就是说不要进行不必要的搜索，要根据自己对所操作的JSON的最大了解程度来进行搜索，比如明知道某个json数组里面没有自己想要的数据，就别去对它进行一遍又一遍的搜索。
 
 ### JsonDocument 是非托管资源
 
