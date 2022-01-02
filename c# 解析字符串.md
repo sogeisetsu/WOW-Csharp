@@ -227,14 +227,14 @@ else
 
 ### 如何在 `JsonDocument` 和 `JsonElement` 中搜索子元素
 
-对 JsonElement 的搜索需要对属性进行顺序搜索，因此速度相对较慢（例如在使用 TryGetProperty 时）。 System.Text.Json 旨在最小化初始解析时间而不是查找时间。因此，在搜索 JsonDocument 对象时使用以下方法来优化性能：
+对 `JsonElement` 的搜索需要对属性进行顺序搜索，因此速度相对较慢（例如在使用 `TryGetProperty` 时）。 `System.Text.Json` 旨在最小化初始解析时间而不是查找时间。因此，在搜索 `JsonDocument` 对象时使用以下方法来优化性能：
 
 - 使用内置的枚举器（EnumerateArray 和 EnumerateObject）而不是自己做索引或循环。不要对**数组形式的`JsonElement`**进行诸如`students[1]`的操作。
 - 不要使用 RootElement 通过每个属性对整个 JsonDocument 进行顺序搜索。相反，**根据 JSON 数据的已知结构搜索嵌套的 JSON 对象。**也就是说不要进行不必要的搜索，要根据自己对所操作的JSON的最大了解程度来进行搜索，比如明知道某个json数组里面没有自己想要的数据，就别去对它进行一遍又一遍的搜索。
 
 ### JsonDocument 是非托管资源
 
-因为是非托管资源，其不会在CLR中被托管。JsonDocument 类型实现了 IDisposable ，为了内存的整洁应该在using块中使用，使其在使用完之后立即被释放资源，就像下面这样：
+因为是非托管资源，其不会在CLR中被托管。`JsonDocument` 类型实现了 `IDisposable` ，为了内存的整洁应该在using块中使用，使其在使用完之后立即被释放资源，就像下面这样：
 
 ```c#
 using (JsonDocument jsonDocument = JsonDocument.Parse(jsonText))
@@ -247,7 +247,7 @@ using (JsonDocument jsonDocument = JsonDocument.Parse(jsonText))
 
 #### 函数调用JsonDocument
 
-如果因为某种原因需要将JsonDocument转给方法调用者，则仅从您的 API 返回 JsonDocument，在大多数情况下，这不是必需的。返回返回 RootElement 的 Clone就好，它是一个 JsonElement。demo如下：
+如果因为某种原因需要将`JsonDocument`转给方法调用者，则仅从您的 API 返回 `JsonDocument`，在大多数情况下，这不是必需的。返回返回 `RootElement` 的 `Clone`就好，它是一个 `JsonElement`。demo如下：
 
 ```c#
 public JsonElement LookAndLoad(JsonElement source)
